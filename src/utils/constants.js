@@ -1,0 +1,2 @@
+export const background_image ="https://b.zmtcdn.com/web_assets/81f3ff974d82520780078ba1cfbd453a1583259680.png"
+export const logo="https://www.foodboxdeliveries.com/wp-content/uploads/2022/12/FOODBOX-LOGO.png"
