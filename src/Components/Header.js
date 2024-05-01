@@ -1,9 +1,21 @@
+
 import { logo } from "../utils/constants"
 
-const Header = () => {
+const Header = ({setshowLoginPopup}) => {
+  
   return (
-    <div className="flex bg-gradient-to-r from-green-800 to-gray-900 h-16">
+    
+    <div className="flex justify-between bg-rose-800">
+    <div className="">
     <img className="h-[45px] m-2" src={logo} alt="logo"/>
+    </div>
+    <div className="">
+    <ul className="flex justify-between m-3 p-3 font-bold text-lg">
+      <button onClick={()=>setshowLoginPopup(true)} className="px-5">Sign In/ Sign Up</button>
+      <li>Cart</li>
+    </ul>
+    </div>
+    
     </div>
   )
 }
