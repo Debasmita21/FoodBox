@@ -6,7 +6,12 @@ npm start
 
 --Create react app
 --Configured Tailwind CSS
---
+--Routing
+--Header
+--Login Page
+--Login Modal
+--Form Validation
+
 ##Features
 --Login/Sign Up
     - Sign In / Sign Up form
