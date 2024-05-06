@@ -2,7 +2,7 @@
 
 npm start
 
-## Netflisx-gpt
+## FoodBox
 
 --Create react app
 --Configured Tailwind CSS
@@ -11,6 +11,7 @@ npm start
 --Login Page
 --Login Modal
 --Form Validation
+--deploy app to vercel
 
 ##Features
 --Login/Sign Up
