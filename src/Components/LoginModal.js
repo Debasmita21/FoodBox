@@ -1,8 +1,18 @@
 import React, { useRef, useState } from 'react'
 import { X } from 'lucide-react';
 import { checkValidLoginFormData } from '../utils/validation';
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth"
+import { auth } from "../utils/firebase";
+import {useNavigate} from "react-router-dom";
+import { updateProfile } from "firebase/auth";
+import { addUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
+
 
 const LoginModal = ({onClose}) => {
+
+  const navigate= useNavigate();
+  const dispatch = useDispatch();
 
   const modalRef=useRef();
   const closeLoginModal=(e)=>{
@@ -22,9 +32,61 @@ const LoginModal = ({onClose}) => {
   const handleButtonClick=()=>{
     //validate form data
     //checkValidLoginFormData(email,password)
-    console.log(email,password)
+    
     const message= checkValidLoginFormData(email.current.value,password.current.value)
-    seterrorMessage(message)
+    seterrorMessage(message);
+    if(message) return;
+    if(!isSignInForm){
+
+  //Sign Up logic
+      
+createUserWithEmailAndPassword(auth,
+  email.current.value,
+  password.current.value)
+
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    //console.log(user)
+    
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    seterrorMessage(errorCode+ "-" +errorMessage)
+  });
+
+    }
+    else{
+
+      // Sign In logic
+
+      signInWithEmailAndPassword(auth, 
+        email.current.value,
+        password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    
+    //console.log(user)
+    
+    updateProfile(auth.currentUser, {
+      displayName: name.current.value
+    }).then(() => {
+      const {uid,email,displayName} = auth.currentUser;
+      dispatch(addUser({uid:uid,email:email,displayName:displayName}))
+      
+    }).catch((error) => {
+      seterrorMessage(error.message)
+    });
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    seterrorMessage(errorCode+ "-" +errorMessage)
+  });
+    }
+
   }
   const [errorMessage,seterrorMessage]=useState()
 
